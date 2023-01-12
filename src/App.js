@@ -7,7 +7,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgetPassword from "./pages/ForgetPassword";
 import Header from "./components/Header";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 

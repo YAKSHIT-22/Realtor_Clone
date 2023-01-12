@@ -1,50 +1,57 @@
-import React from "react";
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import {AiFillEyeInvisible, AiFillEye} from "react-icons/ai";
+import { useState } from "react";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
-import {getAuth, createUserWithEmailAndPassword,updateProfile } from 'firebase/auth';
-import {db} from '../firebase'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "../firebase";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { toast } from "react-toastify";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export default function SignUp() {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [formData, setFormData] = React.useState({
-    name:"",
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
   });
   const { name, email, password } = formData;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function onChange(e) {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
   }
- async function onSubmit(e) {
-      e.preventDefault();
-      try {
-        const auth = getAuth()
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-       
-        updateProfile(auth.currentUser,{
-          displayName: name,
-        })
-        const user = userCredential.user;
-        const formDataCopy = {...formData}
-        delete formDataCopy.password
-        formDataCopy.timestamp = serverTimestamp();
-        await setDoc(doc(db, "users", user.uid), formDataCopy);
-        toast.success("Sign Up Succesful")
-        navigate("/")
-      } catch (error) {
-        toast.error("Something went wrong!! Try again")
-      }
+  async function onSubmit(e) {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      const user = userCredential.user;
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      toast.success("Sign up was successful");
+      navigate("/");
+    } catch (error) {
+      toast.error("Something went wrong with the registration");
+    }
   }
   return (
     <HelmetProvider>
@@ -71,6 +78,7 @@ export default function SignUp() {
                 placeholder="Name"
                 value={name}
                 onChange={onChange}
+                required
               />
               <input
                 className="w-full px-4 py-2 text-lg text-gray-700 bg-white border-gray-300 rounded-sm transition ease-in-out"
@@ -79,6 +87,7 @@ export default function SignUp() {
                 placeholder="Email Address"
                 value={email}
                 onChange={onChange}
+                required
               />
               <div className="relative">
               <input
@@ -88,6 +97,7 @@ export default function SignUp() {
                 placeholder="Password"
                 value={password}
                 onChange={onChange}
+                required
               />
               {showPassword ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState) }/>) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword(prevState=>!prevState) }/>)}
               </div>
