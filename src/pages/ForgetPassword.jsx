@@ -1,7 +1,10 @@
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
+
 
 export default function ForgetPassword() {
   const [formData, setFormData] = React.useState({
@@ -13,6 +16,17 @@ export default function ForgetPassword() {
       ...prevState,
       [e.target.id]: e.target.value,
     }));
+  }
+  async function onSubmit(e){
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth,email);
+      toast.success("Email was sent successfully.");
+      
+    } catch (error) {
+      toast.error("Could not send reset password")
+    }
   }
   return (
     <HelmetProvider>
@@ -31,7 +45,7 @@ export default function ForgetPassword() {
             />
           </div>
           <div className="w-full md:w-[67%] lg:w-[40%]">
-            <form className="flex  flex-col item-center justify-center gap-6">
+            <form onSubmit={onSubmit} className="flex  flex-col item-center justify-center gap-6">
               <input
                 className="w-full px-4 py-2 text-lg text-gray-700 bg-white border-gray-300 rounded-sm transition ease-in-out"
                 id="email"

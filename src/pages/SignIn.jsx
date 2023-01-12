@@ -3,9 +3,12 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import {AiFillEyeInvisible, AiFillEye} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
-
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function SignIn() {
   const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
     email: "",
     password: "",
@@ -17,6 +20,21 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     }));
   }
+  async function onSubmit(e){
+            e.preventDefault();
+            try {
+              const auth = getAuth();
+              const userCredential = await signInWithEmailAndPassword(auth, email, password);
+              if(userCredential.user){
+                toast.success("Logged In Successfully");
+                navigate("/");
+              }
+              
+            } catch (error) {
+               toast.error("Bad user Credentials")
+            }
+  }
+
   return (
     <HelmetProvider>
       <Helmet>
@@ -34,7 +52,7 @@ export default function SignIn() {
             />
           </div>
           <div className="w-full md:w-[67%] lg:w-[40%]">
-            <form className="flex  flex-col item-center justify-center gap-6">
+            <form onSubmit={onSubmit} className="flex  flex-col item-center justify-center gap-6">
               <input
                 className="w-full px-4 py-2 text-lg text-gray-700 bg-white border-gray-300 rounded-sm transition ease-in-out"
                 id="email"
