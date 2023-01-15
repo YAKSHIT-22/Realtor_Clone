@@ -23,21 +23,21 @@ export default function Header() {
     }
   };
   return (
-    <div className="bg-white border-b shadow-sm sticky top-0 z-50">
-      <header className="flex justify-between items-center px-2 sm:px-4 max-w-6xl mx-auto">
+    <div className="bg-white border-b shadow-sm sticky top-0 z-40">
+      <header className="flex justify-between items-center px-2 sm:px-4 max-w-6xl mx-2 xxs:mx-auto">
         <div>
           <img
             src="https://static.rdc.moveaws.com/images/logos/rdc-logo-default.svg"
             alt="logo"
-            className="h-5 cursor-pointer"
+            className="h-4 w-auto sm:h-5 cursor-pointer"
             onClick={() => navigate("/")}
           />
         </div>
         <div>
-          <ul className="flex gap-6 xs:gap-8 justify-center items-center">
+          <ul className="flex gap-4 xs:gap-6 sm:gap-8 justify-center items-center">
             <li
               onClick={() => navigate("/")}
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+              className={`cursor-pointer py-3 text-xs xxs:text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
                 pathMatchRoute("/") && "text-black border-b-red-600"
               }`}
             >
@@ -45,7 +45,7 @@ export default function Header() {
             </li>
             <li
               onClick={() => navigate("/offers")}
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+              className={`cursor-pointer py-3 text-xs xxs:text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
                 pathMatchRoute("/offers") && "text-black border-b-red-600"
               }`}
             >
@@ -53,7 +53,7 @@ export default function Header() {
             </li>
             <li
               onClick={() => navigate("/profile")}
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+              className={`cursor-pointer py-3 text-xs xxs:text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
                 (pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) && "text-black border-b-red-600"
               }`}
             >
