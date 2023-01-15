@@ -53,6 +53,7 @@ export default function ForgetPassword() {
                 placeholder="Email Address"
                 value={email}
                 onChange={onChange}
+                required
               />
               <div className="flex w-full flex-col sm:flex-row items-center justify-center text-center sm:text-start sm:justify-between p-1 whitespace-nowrap text-sm sm:text-lg gap-2">
                 <p className="">Don't have a account?

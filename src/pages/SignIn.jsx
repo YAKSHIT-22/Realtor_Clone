@@ -60,6 +60,7 @@ export default function SignIn() {
                 placeholder="Email Address"
                 value={email}
                 onChange={onChange}
+                required
               />
               <div className="relative w-full">
               <input
@@ -69,6 +70,7 @@ export default function SignIn() {
                 placeholder="Password"
                 value={password}
                 onChange={onChange}
+                required
               />
               {showPassword ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState) }/>) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword(prevState=>!prevState) }/>)}
               </div>
