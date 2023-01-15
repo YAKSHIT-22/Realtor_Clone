@@ -89,7 +89,7 @@ export default function SignUp() {
                 onChange={onChange}
                 required
               />
-              <div className="relative">
+              <div className="relative w-full">
               <input
                 className="w-full px-4 py-2 text-lg text-gray-700 bg-white border-gray-300 rounded-sm transition ease-in-out"
                 id="password"
@@ -101,7 +101,7 @@ export default function SignUp() {
               />
               {showPassword ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState) }/>) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword(prevState=>!prevState) }/>)}
               </div>
-              <div className="flex flex-col sm:flex-row items-center justify-center text-center sm:text-start sm:justify-between p-1 whitespace-nowrap text-sm sm:text-lg gap-2">
+              <div className="flex w-full flex-col sm:flex-row items-center justify-between text-center sm:text-start sm:justify-between p-1 whitespace-nowrap text-sm sm:text-lg gap-2">
                 <p className="">Have a account?
                 <Link to="/sign-in" className="text-red-600 hover:text-red-700 transition duration-200 ease-in-out ml-1">Sign In</Link>
                 </p>
