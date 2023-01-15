@@ -70,7 +70,7 @@ export default function SignUp() {
             />
           </div>
           <div className="w-full md:w-[67%] lg:w-[40%]">
-            <form onSubmit={onSubmit} className="flex  flex-col item-center justify-center gap-6">
+            <form onSubmit={onSubmit} className="flex  flex-col items-center justify-center gap-6">
             <input
                 className="w-full px-4 py-2 text-lg text-gray-700 bg-white border-gray-300 rounded-sm transition ease-in-out"
                 id="name"
@@ -101,7 +101,7 @@ export default function SignUp() {
               />
               {showPassword ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState) }/>) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword(prevState=>!prevState) }/>)}
               </div>
-              <div className="flex flex-col sm:flex-row item-center justify-center text-center sm:text-start sm:justify-between p-1 whitespace-nowrap text-sm sm:text-lg">
+              <div className="flex flex-col sm:flex-row items-center justify-center text-center sm:text-start sm:justify-between p-1 whitespace-nowrap text-sm sm:text-lg">
                 <p className="mb-6">Have a account?
                 <Link to="/sign-in" className="text-red-600 hover:text-red-700 transition duration-200 ease-in-out ml-1">Sign In</Link>
                 </p>

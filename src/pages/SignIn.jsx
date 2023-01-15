@@ -52,7 +52,7 @@ export default function SignIn() {
             />
           </div>
           <div className="w-full md:w-[67%] lg:w-[40%]">
-            <form onSubmit={onSubmit} className="flex  flex-col item-center justify-center gap-6">
+            <form onSubmit={onSubmit} className="flex  flex-col items-center justify-center gap-6">
               <input
                 className="w-full px-4 py-2 text-lg text-gray-700 bg-white border-gray-300 rounded-sm transition ease-in-out"
                 id="email"
@@ -61,7 +61,7 @@ export default function SignIn() {
                 value={email}
                 onChange={onChange}
               />
-              <div className="relative">
+              <div className="relative w-full">
               <input
                 className="w-full px-4 py-2 text-lg text-gray-700 bg-white border-gray-300 rounded-sm transition ease-in-out"
                 id="password"
@@ -72,8 +72,8 @@ export default function SignIn() {
               />
               {showPassword ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState) }/>) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword(prevState=>!prevState) }/>)}
               </div>
-              <div className="flex flex-col sm:flex-row item-center justify-center text-center sm:text-start sm:justify-between p-1 whitespace-nowrap text-sm sm:text-lg">
-                <p className="mb-6">Don't have a account?
+              <div className="w-full flex flex-col sm:flex-row items-center justify-center text-center sm:text-start sm:justify-between p-1 whitespace-nowrap text-sm sm:text-lg gap-2">
+                <p className="">Don't have a account?
                 <Link to="/sign-up" className="text-red-600 hover:text-red-700 transition duration-200 ease-in-out ml-1">Register</Link>
                 </p>
                 <p>
@@ -81,7 +81,7 @@ export default function SignIn() {
                 </p>
               </div>
             <button type="submit" className="w-full bg-blue-600 text-white px-7 py-3 text-sm sm:text-lg font-medium uppercase rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800">Sign In</button>
-            <div className="my-4 before:border-t flex before:flex-1 items-center before:border-gray-300 after:border-t after:flex-1  after:border-gray-300">
+            <div className="my-4 before:border-t-2 flex before:flex-1 items-center before:border-gray-500 after:border-t-2 after:flex-1  after:border-gray-500">
               <p className="text-center font-semibold mx-4">OR</p>
             </div>
               <OAuth/>
