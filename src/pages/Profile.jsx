@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { db } from "../firebase";
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -57,7 +58,6 @@ export default function Profile() {
   }
   React.useEffect(() => {
     async function fetchUserListings() {
-     
       const listingRef = collection(db, "listings");
       const q = query(
         listingRef,
@@ -66,7 +66,7 @@ export default function Profile() {
       );
       const querySnap = await getDocs(q);
       let listings = [];
-      querySnap.forEach((doc)=>{
+      querySnap.forEach((doc) => {
         return listings.push({
           id: doc.id,
           data: doc.data(),
@@ -77,6 +77,24 @@ export default function Profile() {
     }
     fetchUserListings();
   }, [auth.currentUser.uid]);
+
+  async function onDelete(listingID){
+        if(window.confirm('Are you sure you want to delete?')){
+          await deleteDoc(doc(db, "listings", listingID));
+          const updatedListings = listings.filter(
+            (listing) => listing.id !== listingID
+          );
+          setListings(updatedListings)
+          toast.success("Successfully deleted the listing");
+        }
+  }
+
+  function onEdit(listingID){
+         navigate(`/edit-listing/${listingID}`)
+  }
+
+
+
   return (
     <HelmetProvider>
       <Helmet>
@@ -110,7 +128,7 @@ export default function Profile() {
                 className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition ease-in-out"
               />
 
-              <div className="w-full flex items-center justify-between flex-row whitespace-nowrap text-sm">
+              <div className="w-full flex px-1 items-center justify-between flex-row whitespace-nowrap text-sm">
                 <p className="flex items-center justify-center flex-row gap-1">
                   Want to change your name?
                   <span
@@ -131,29 +149,39 @@ export default function Profile() {
                 </p>
               </div>
             </form>
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white uppercase px-7 py-3 text-xs xxs:text-sm font-medium rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out flex items-center justify-center flex-row gap-3 active:bg-blue-800"
-            >
-              <Link
-                to="/create-listing"
-                className="flex items-center justify-center gap-3 flex-row"
+            <div className="px-2 w-full">
+              <button
+                type="submit"
+                className="w-full  bg-blue-600 text-white uppercase px-7 py-3 text-xs xxs:text-sm font-medium rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out flex items-center justify-center flex-row gap-3 active:bg-blue-800"
               >
-                <FcHome className="text-3xl bg-red-200 rounded-full border-2 p-1" />
-                Sell or rent your home
-              </Link>
-            </button>
+                <Link
+                  to="/create-listing"
+                  className="flex items-center justify-center gap-3 flex-row"
+                >
+                  <FcHome className="text-3xl bg-red-200 rounded-full border-2 p-1" />
+                  Sell or rent your home
+                </Link>
+              </button>
+            </div>
           </div>
         </section>
         <div className="p-2 sm:p-4 max-w-6xl mx-auto">
           {!loading && listings.length > 0 && (
             <>
-                <h2 className="text-xl text-center font-semibold mt-2 mb-2">My Listings</h2>
-                <ul>
-                  {listings.map((listing)=>(
-                    <ListingItem key={listing.id} id={listing.id} listing={listing.data} />
-                  ))}
-                </ul>
+              <h2 className="text-xl text-center font-semibold mt-4 mb-4">
+                My Listings
+              </h2>
+              <ul className="grid sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 2xl:grid-cols-5 my-6">
+                {listings.map((listing) => (
+                  <ListingItem
+                    key={listing.id}
+                    id={listing.id}
+                    listing={listing.data}
+                    onDelete={()=>onDelete(listing.id)}
+                    onEdit={()=>onEdit(listing.id)}
+                  />
+                ))}
+              </ul>
             </>
           )}
         </div>

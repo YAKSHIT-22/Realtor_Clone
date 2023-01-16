@@ -6,3 +6,6 @@
 body{
   background-color: rgb(240,253,240);
 }
+html::-webkit-scrollbar{
+  width:0px;
+}
