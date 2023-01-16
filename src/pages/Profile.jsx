@@ -129,21 +129,21 @@ export default function Profile() {
               />
 
               <div className="w-full flex px-1 items-center justify-between flex-row whitespace-nowrap text-sm">
-                <p className="flex items-center justify-center flex-row gap-1">
+                <p className="flex items-center justify-center flex-row gap-1 text-xs xs:text-sm">
                   Want to change your name?
                   <span
                     onClick={() => {
                       changeDetail && onSubmit();
                       setChangeDetail((prevState) => !prevState);
                     }}
-                    className="text-red-600 hover:text-red-700 transition ease-in-out duration-150 ml-1 cursor-pointer"
+                    className="text-red-600 text-xs xs:text-sm hover:text-red-700 transition ease-in-out duration-150 ml-1 cursor-pointer"
                   >
                     {changeDetail ? "Apply Change" : "Edit"}
                   </span>
                 </p>
                 <p
                   onClick={onLogout}
-                  className="text-blue-600 hover:text-blue-800 transition duration-200 ease-in-out cursor-pointer"
+                  className="text-blue-600 text-xs xs:text-sm hover:text-blue-800 transition duration-200 ease-in-out cursor-pointer"
                 >
                   Sign Out!
                 </p>
@@ -156,7 +156,7 @@ export default function Profile() {
               >
                 <Link
                   to="/create-listing"
-                  className="flex items-center justify-center gap-3 flex-row"
+                  className="flex items-center justify-center gap-3 flex-row whitespace-nowrap"
                 >
                   <FcHome className="text-3xl bg-red-200 rounded-full border-2 p-1" />
                   Sell or rent your home
@@ -171,7 +171,7 @@ export default function Profile() {
               <h2 className="text-xl text-center font-semibold mt-4 mb-4">
                 My Listings
               </h2>
-              <ul className="grid sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 2xl:grid-cols-5 my-6">
+              <ul className="grid sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 2xl:grid-cols-5 my-6 p-1">
                 {listings.map((listing) => (
                   <ListingItem
                     key={listing.id}
