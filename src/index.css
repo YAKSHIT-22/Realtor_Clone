@@ -9,3 +9,13 @@ body{
 html::-webkit-scrollbar{
   width:0px;
 }
+
+.swiper-button-next:after,
+.swiper-button-prev:after{
+  color: red !important;
+}
+
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
+  background: red !important;
+}
