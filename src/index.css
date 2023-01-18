@@ -12,10 +12,10 @@ html::-webkit-scrollbar{
 
 .swiper-button-next:after,
 .swiper-button-prev:after{
-  color: red !important;
+  color: deepskyblue !important;
 }
 
 
 .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
-  background: red !important;
+  background: deepskyblue !important;
 }

@@ -43,12 +43,12 @@ export default function ListingItem({ listing, id, onEdit, onDelete }) {
           <div className="flex items-center justify-center flex-row gap-3">
             <div className="flex items-center justify-center gap-1 flex-row">
               <p className="font-bold text-xs">
-                {listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : "1 Bed"}
+                {+listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : "1 Bed"}
               </p>
             </div>
             <div className="flex items-center justify-center gap-1 flex-row">
               <p className="font-bold text-xs">
-                {listing.bathrooms > 1
+                {+listing.bathrooms > 1
                   ? `${listing.bathrooms} Baths`
                   : "1 Bath"}
               </p>
