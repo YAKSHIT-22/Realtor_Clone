@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
+import Slider from '../components/Slider'
+
 
 export default function Home() {
+  
   return (
     <HelmetProvider>
      <Helmet>
@@ -9,7 +13,7 @@ export default function Home() {
                 <title>Realtor | Home</title>
      </Helmet>
     <div>
-      home
+      <Slider/>
     </div>
     </HelmetProvider>
   )
