@@ -12,14 +12,25 @@ import SwiperCore, {
   Pagination,
 } from "swiper";
 import "swiper/css/bundle";
-import { FaMapMarkerAlt, FaShare, FaBed, FaBath, FaParking, FaChair } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaShare,
+  FaBed,
+  FaBath,
+  FaParking,
+  FaChair,
+} from "react-icons/fa";
 import { toast } from "react-toastify";
+import { getAuth } from "firebase/auth";
+import Contact from "../components/Contact";
 
 export default function Listing() {
+  const auth = getAuth();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const params = useParams();
+  const [contactLandlord, setContactLandlord] = useState(false)
   SwiperCore.use([Autoplay, Navigation, Pagination]);
   useEffect(() => {
     async function fetchListing() {
@@ -78,7 +89,7 @@ export default function Listing() {
           </p>
         )}
       </div>
-      <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl lg:mx-auto m-4 p-2 rounded-sm shadow-md bg-white lg:gap-5">
+      <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl lg:mx-auto m-4 p-4 rounded-sm shadow-md bg-white lg:gap-5">
         <div className="w-full h-full flex items-start flex-col justify-start md:ml-4 mt-3 gap-4">
           <p className="text-2xl font-semibold text-blue-900 flex items-center justify-start ">
             {listing.name} - ${" "}
@@ -98,15 +109,16 @@ export default function Listing() {
             <p className="bg-red-800 w-full max-w-[12.5rem] h-auto rounded-md p-2 text-white text-center font-normal text-xs sm:text-sm shadow-md">
               {listing.type === "rent" ? "Rent" : "Sale"}
             </p>
-           
-              {listing.offer && (
-                <p className="bg-green-800 whitespace-nowrap  w-full max-w-[12.5rem] h-auto rounded-md p-2 text-white text-center font-normal text-xs sm:text-sm shadow-md">
-                  ${+listing.regularPrice - +listing.discountedPrice} Discount
-                </p>
-              )}
-           
+
+            {listing.offer && (
+              <p className="bg-green-800 whitespace-nowrap  w-full max-w-[12.5rem] h-auto rounded-md p-2 text-white text-center font-normal text-xs sm:text-sm shadow-md">
+                ${+listing.regularPrice - +listing.discountedPrice} Discount
+              </p>
+            )}
           </div>
-          <p className="flex flex-row items-center justify-start"><span className="font-semibold">Description - </span>&nbsp;{listing.description}</p>
+          <p className="flex flex-row items-center justify-start whitespace-pre-wrap">
+            Description - &nbsp;{listing.description}
+          </p>
           <ul className="mb-3 flex items-start justify-center gap-4 whitespace-nowrap lg:flex-row flex-col sm:flex-row md:flex-col">
             <li className="flex items-center justify-center gap-2 whitespace-nowrap">
               <FaBed className="text-lg" />
@@ -125,6 +137,16 @@ export default function Listing() {
               {listing.furnished ? "Furnished" : "Not furnished"}
             </li>
           </ul>
+          {listing.userRef !== auth.currentUser?.uid && !contactLandlord && (  
+          <div className="flex items-start justify-center w-full sm:w-[70%] md:w-[85%] lg:w-[55%]">
+            <button onClick={()=>setContactLandlord(true)} className="px-7 py-3 bg-blue-600 text-white font-medium text-xs sm:test-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out mb-3">
+              Contact Landlord
+            </button>
+          </div>
+          )}
+          {contactLandlord && (
+            <Contact  userRef={listing.userRef} listing={listing} />
+          )}
         </div>
         <div className="bg-blue-300 w-full h-[12.5rem] lg:h-[25rem] z-10 overflow-x-hidden"></div>
       </div>
