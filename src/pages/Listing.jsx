@@ -23,6 +23,7 @@ import {
 import { toast } from "react-toastify";
 import { getAuth } from "firebase/auth";
 import Contact from "../components/Contact";
+import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
 
 export default function Listing() {
   const auth = getAuth();
@@ -30,7 +31,7 @@ export default function Listing() {
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const params = useParams();
-  const [contactLandlord, setContactLandlord] = useState(false)
+  const [contactLandlord, setContactLandlord] = useState(false);
   SwiperCore.use([Autoplay, Navigation, Pagination]);
   useEffect(() => {
     async function fetchListing() {
@@ -137,18 +138,40 @@ export default function Listing() {
               {listing.furnished ? "Furnished" : "Not furnished"}
             </li>
           </ul>
-          {listing.userRef !== auth.currentUser?.uid && !contactLandlord && (  
-          <div className="flex items-start justify-center w-full sm:w-[70%] md:w-[85%] lg:w-[55%]">
-            <button onClick={()=>setContactLandlord(true)} className="px-7 py-3 bg-blue-600 text-white font-medium text-xs sm:test-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out mb-3">
-              Contact Landlord
-            </button>
-          </div>
+          {listing.userRef !== auth.currentUser?.uid && !contactLandlord && (
+            <div className="flex items-start justify-center w-full sm:w-[70%] md:w-[85%] lg:w-[55%]">
+              <button
+                onClick={() => setContactLandlord(true)}
+                className="px-7 py-3 bg-blue-600 text-white font-medium text-xs sm:test-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out mb-3"
+              >
+                Contact Landlord
+              </button>
+            </div>
           )}
           {contactLandlord && (
-            <Contact  userRef={listing.userRef} listing={listing} />
+            <Contact userRef={listing.userRef} listing={listing} />
           )}
         </div>
-        <div className="bg-blue-300 w-full h-[12.5rem] lg:h-[25rem] z-10 overflow-x-hidden"></div>
+        <div className="w-full mt-5 md:mt-0 md:ml-2 h-[12.5rem] sm:h-[17.5rem] md:h-[25rem] z-10 overflow-x-hidden">
+          <MapContainer
+            center={[listing.geolocation.lat, listing.geolocation.lng]}
+            zoom={15}
+            scrollWheelZoom={false}
+            style={{height:"100%", width:"100%"}}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker
+              position={[listing.geolocation.lat, listing.geolocation.lng]}
+            >
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          </MapContainer>
+        </div>
       </div>
     </main>
   );
