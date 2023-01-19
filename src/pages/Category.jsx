@@ -112,7 +112,7 @@ export default function Category() {
           </>
         ) : (
           <p className="text-xl text-center mt-6 p-1 font-normal text-blue-700">
-            There are no current offers
+            There are no current {params.categoryName === "rent" ? "places for rent" : "places for sale" }
           </p>
         )}
       </div>
