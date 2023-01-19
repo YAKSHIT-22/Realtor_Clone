@@ -7,7 +7,10 @@ body{
   background-color: rgb(240,253,240);
 }
 html::-webkit-scrollbar{
-  width:0px;
+  display:none;
+}
+html{
+  scrollbar-width: none;
 }
 
 .swiper-button-next:after,
